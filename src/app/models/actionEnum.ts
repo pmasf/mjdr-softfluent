@@ -1,0 +1,13 @@
+export enum ActionEnum{
+    CLEAR_PLAYERS,
+    ADD_PLAYER,
+    MOVE_PLAYER,
+    SFX_ON,
+    VFX_ON,
+    FX_OFF,
+    SET_TO_DEFAULT_COLOR,
+    SET_BACKGROUND,
+    REMOVE_PLAYER,
+    SET_VISIBILITY,
+    MANAGE_COLOR
+}

@@ -1,0 +1,20 @@
+{
+    "BaseUrl": "assets/sfxs/",
+    "Assets": [
+        {
+            "Name": "ACT-FAIL",
+            "UiName": "FAIL",
+            "Url": "ACT-FAIL.mp3"
+        },
+        {
+            "Name": "ACT-SUCCESS",
+            "UiName": "SUCCESS",
+            "Url": "ACT-SUCCESS.mp3"
+        },
+        {
+            "Name": "SPH-COR",
+            "UiName": "COR",
+            "Url": "SPH-COR.mp3"
+        }
+    ]
+}

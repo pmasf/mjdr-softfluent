@@ -1,0 +1,23 @@
+<div class="boundary" [style.background-image]="'url(' + BaseBackgroundsUrl + SelectedBackground + ')'">
+    <video id="trailerVideoplayer" type="video/mp4"></video>
+
+    <div *ngFor="let currentPlayer of Players" [class]="currentPlayer.CssClass" [id]="currentPlayer.Guid"
+        [style.background-color]="currentPlayer.BackgroundColor" [style.color]="currentPlayer.Color"
+        [style.transform]="'translate(' + currentPlayer.X + 'px, ' + currentPlayer.Y + 'px)'"
+        [style.transition]="currentPlayer.Transition" [style.visibility]="'' + Visibility + ''"
+        [ngStyle]="{'background-image':'url(' + currentPlayer.SfxBackgroundImage + '), url(' + currentPlayer.DefaultBackgroundImage + ')'}"
+        cdkDragBoundary=".boundary" cdkDrag>
+        {{currentPlayer.Name}}
+    </div>
+
+    <audio id="sfxPlayer001"></audio>
+    <audio id="sfxPlayer002"></audio>
+    <audio id="sfxPlayer003"></audio>
+    <audio id="sfxPlayer004"></audio>
+    <audio id="sfxPlayer005"></audio>
+    <audio id="sfxPlayer006"></audio>
+    <audio id="sfxPlayer007"></audio>
+    <audio id="sfxPlayer008"></audio>
+    <audio id="sfxPlayer009"></audio>
+
+</div>

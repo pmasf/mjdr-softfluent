@@ -1,0 +1,158 @@
+body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .main-container {
+    display: flex;
+  }
+
+  .mj-menu {
+    display: flex;
+    width: 310px;
+    height: 528px;
+    border: dotted #ccc 1px;
+    flex-direction: column;
+    align-content: center;
+    background-color: white;
+  }
+
+  .mj-menu a {
+    display: inline-flex;
+    width: 150px;
+    height: 35px;
+    margin: 5px;
+    border: dotted #ccc 2px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: black;
+    background-color: #ccc;
+  }
+
+  .mj-menu select {
+    display: inline-flex;
+    width: 200px;
+    height: 35px;
+    margin: 5px;
+    border: dotted #ccc 2px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: black;
+    background-color: #ccc;
+  }
+
+  .player-box {
+    width: 33px;
+    height: 46px;
+    border: solid 1px #ccc;
+    cursor: move;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bolder;
+    background-size: 33px 46px;
+    border-radius: 4px;
+    position: absolute;
+    box-sizing: border-box;
+    padding: 10px;
+    transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    -moz-border-radius: 50px / 25px;
+    -webkit-border-radius: 50px / 25px;
+    border-radius: 50px / 25px;
+  }
+
+  .boundary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 960px;
+    height: 530px;
+    max-width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    background-color: white;
+  }
+
+  .card-sheet {
+    display: flex;
+    height: 30px;
+    width: 30px;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+  }
+
+  .party {
+    display: flex;
+    overflow-y: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 650px;
+    height: 80px;
+  }
+
+  .fxs {
+    display: flex;
+    overflow-y: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    width: 300px;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .fx {
+    display: flex;
+    height: 30px;
+    width: 48px;
+    justify-content: center;
+    align-items: center;
+    margin: 6px;
+    background-color: lightgrey;
+    font-size: 9px;
+  }
+
+  .card-manager {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-items: center;
+    width: 300px;
+    height: 60px;
+  }
+
+  .card-manager select {
+    width: 130px;
+    height: 20px;
+  }
+
+  .card-manager a {
+    width: 35px;
+    height: 20px;
+  }
+
+  .card-manager span {
+    width: 200px;
+    height: 20px;
+  }
+
+  .party-player {
+    display: flex;
+    margin-top: 5px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 300px;
+    height: 200px;
+  }
+
+  .party-player a {
+    width: 280px;
+    height: 20px;
+  }

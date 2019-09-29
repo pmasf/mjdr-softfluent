@@ -1,0 +1,20 @@
+{
+    "BaseUrl": "assets/vfxs/",
+    "Assets": [
+        {
+            "Name": "ACT-FAIL",
+            "UiName": "FAIL",
+            "Url": "ACT-FAIL.png"
+        },
+        {
+            "Name": "ACT-SUCCESS",
+            "UiName": "SUCCESS",
+            "Url": "ACT-SUCCESS.png"
+        },
+        {
+            "Name": "SPH-COR",
+            "UiName": "COR",
+            "Url": "SPH-COR.png"
+        }
+    ]
+}

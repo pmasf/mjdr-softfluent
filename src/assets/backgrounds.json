@@ -1,0 +1,25 @@
+{
+    "BaseUrl": "assets/backgrounds/",
+    "Assets": [
+        {
+            "Name": "000-DEFAULT",
+            "UiName": "DEFAULT",
+            "Url": "000-DEFAULT.jpg"
+        },
+        {
+            "Name": "001-BLACK",
+            "UiName": "BLACK",
+            "Url": "001-BLACK.png"
+        },
+        {
+            "Name": "002-BATTLEFIELD",
+            "UiName": "BATTLEFIELD",
+            "Url": "002-BATTLEFIELD.jpg"
+        },
+        {
+            "Name": "SPH-COR",
+            "UiName": "COR",
+            "Url": "SPH-COR.png"
+        }
+    ]
+}

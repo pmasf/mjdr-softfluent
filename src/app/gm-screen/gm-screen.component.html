@@ -1,0 +1,55 @@
+<div class="main-container">
+    <div class="boundary" [style.background-image]="'url(' + BaseBackgroundsUrl + SelectedBackground + ')'">
+        <div *ngFor="let currentPlayer of Players" class="player-box" [id]="currentPlayer.Guid"
+            [style.background-color]="currentPlayer.BackgroundColor" [style.color]="currentPlayer.Color"
+            [style.transform]="'translate(' + currentPlayer.X + 'px, ' + currentPlayer.Y + 'px)'"
+            [style.visibility]="'' + Visibility + ''" (mouseup)="mouseUpHandler(currentPlayer)"
+            (touchend)="mouseUpHandler(currentPlayer)"
+            [ngStyle]="{'background-image':'url(' + currentPlayer.SfxBackgroundImage + '), url(' + currentPlayer.DefaultBackgroundImage + ')'}"
+            [style.z-index]="currentPlayer.ZIndex" cdkDragBoundary=".boundary" cdkDrag>
+            {{currentPlayer.Name}}
+        </div>
+    </div>
+
+    <div class="mj-menu">
+        <div class="card-manager">
+            <div class="card-manager-background">
+                <select [(ngModel)]="SelectedBackground" (change)="changeBackground()">
+                    <option *ngFor="let background of Backgrounds.Assets" [value]="background.Url">{{background.Name}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="card-manager-background">
+                <select [(ngModel)]="SelectedCard">
+                    <option *ngFor="let card of Cards.Assets" [value]="card.Url">{{card.Name}}
+                    </option>
+                </select>
+                <a (click)="addCard()">Add</a>
+                <a (click)="removeCard()">Rem</a>
+                <a (click)="toggleVisibility()">Visi</a>
+            </div>
+        </div>
+
+        <div class="party-player">
+            <div class="party">
+                <div *ngFor="let player of Players" class="card-sheet" (click)="selectPlayer(player)"
+                    [style.background-color]="player.BackgroundColor" [style.color]="player.Color">
+                    <span>{{player.UiName}}</span>
+                </div>
+            </div>
+            <div>
+                <span (click)="clearSelectedPlayer()">Selected Player : </span>
+                <span *ngIf="SelectedPlayer">&nbsp;{{SelectedPlayer.UiName}}</span>
+            </div>
+            <div class="fxs">
+                <div *ngFor="let fx of Sfxs.Assets" class="fx" (click)="playFx(fx)">
+                    <span>{{fx.UiName}}</span>
+                </div>
+            </div>
+            <div>
+                <a (click)="stopFx()">Stop FX</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+{
+    "BaseUrl": "assets/trailers/",
+    "Assets": [
+        {
+            "Name": "TRL-003-001",
+            "UiName": "003-001",
+            "Url": "TRL-003-001.mp4"
+        }
+    ]
+}

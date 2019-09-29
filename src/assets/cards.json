@@ -1,0 +1,35 @@
+{
+    "BaseUrl": "assets/cards/",
+    "Assets": [
+        {
+            "Name": "ACT-ATQ-MAG",
+            "UiName": "ATQ-MAG",
+            "Url": "ACT-ATQ-MAG.jpg"
+        },
+        {
+            "Name": "ACT-ATQ-PHY",
+            "UiName": "ATQ-PHY",
+            "Url": "ACT-ATQ-PHY.jpg"
+        },
+        {
+            "Name": "ACT-MOVE",
+            "UiName": "MOVE",
+            "Url": "ACT-MOVE.jpg"
+        },
+        {
+            "Name": "PER-SBIRE-FEMININ",
+            "UiName": "SBIRE-FEMININ",
+            "Url": "PER-SBIRE-FEMININ.jpg"
+        },
+        {
+            "Name": "PER-SBIRE-MASCULIN-2",
+            "UiName": "SBIRE-MASCULIN-2",
+            "Url": "PER-SBIRE-MASCULIN-2.jpg"
+        },
+        {
+            "Name": "PER-Yuking",
+            "UiName": "Yuking",
+            "Url": "PER-Yuking.jpg"
+        }
+    ]
+}
