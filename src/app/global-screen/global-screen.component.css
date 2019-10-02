@@ -7,7 +7,6 @@ body {
     width: 66px;
     height: 93px;
     border: solid 1px #ccc;
-    cursor: move;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -38,7 +37,6 @@ body {
     width: 1920px;
     height: 1060px;
     max-width: 100%;
-    /*border: dotted #ccc 2px;*/
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
