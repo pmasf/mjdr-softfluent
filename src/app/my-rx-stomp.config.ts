@@ -2,13 +2,13 @@ import { InjectableRxStompConfig } from '@stomp/ng2-stompjs';
 
 export const myRxStompConfig: InjectableRxStompConfig = {
   // Which server?
-  brokerURL: 'ws://192.168.1.46:15674/ws',
+  brokerURL: 'ws://{L ADRESSE IP DE VOTRE FILE RABBITMQ}:{LE PORT DE VOTRE RABBITMQ}/ws' ,
 
   // Headers
   // Typical keys: login, passcode, host
   connectHeaders: {
-    login: 'admin',
-    passcode: 's@lig091150'
+    login: 'VOTRE IDENTIFIANT RABBITMQ',
+    passcode: 'VOTRE MOT DE PASSE RABBITMQ'
   },
 
   // How often to heartbeat?
