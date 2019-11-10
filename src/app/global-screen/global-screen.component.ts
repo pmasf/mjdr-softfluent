@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AssetFile } from '../models/assetFile';
 import { Player } from '../models/player';
 import { QueueMessage } from '../models/message';
@@ -15,7 +15,7 @@ import { ActionEnum } from '../models/actionEnum';
 })
 export class GlobalScreenComponent implements OnInit {
 
-  private hueBridgeUrl: string = 'http://192.168.1.1/api/OTBB0J8zWAiqUiDNrXcq7Ym6XYVEw1w5cuJldEIv/groups/1/action';
+  private hueBridgeUrl: string = 'http://192.168.1.119/api/OTBB0J8zWAiqUiDNrXcq7Ym6XYVEw1w5cuJldEIv/groups/1/action';
 
   Players: Player[] = [];
 
@@ -32,7 +32,7 @@ export class GlobalScreenComponent implements OnInit {
   Visibility: string = 'hidden';
 
   private topicSubscription: Subscription;
-  private audioLayerNumber: number = 9;
+  private audioLayerNumber: number = 3;
 
   constructor(private rxStompService: RxStompService, private http: HttpClient) {
     this.http.get('./assets/backgrounds.json').subscribe(response => {
@@ -67,6 +67,8 @@ export class GlobalScreenComponent implements OnInit {
     let player: Player;
 
     receivedMessage = JSON.parse(message.body);
+
+    console.info(receivedMessage);
 
     switch (receivedMessage.MessageType) {
       case ActionEnum.ADD_PLAYER:
@@ -134,6 +136,7 @@ export class GlobalScreenComponent implements OnInit {
   }
 
   playSfx(sfxPath: string) {
+    console.log("playsfx:" + sfxPath)
     if (sfxPath !== '') {
       var layerNumber = 1;
       while (!this.manageLayers(<HTMLAudioElement>document.getElementById('sfxPlayer00' + layerNumber), sfxPath + ".mp3") || layerNumber > this.audioLayerNumber) {
@@ -144,18 +147,26 @@ export class GlobalScreenComponent implements OnInit {
 
   stopSfx() {
     for (var i = 1; i <= this.audioLayerNumber; i++) {
-      (<HTMLAudioElement>document.getElementById('sfxPlayer00' + i)).pause();
-      (<HTMLAudioElement>document.getElementById('sfxPlayer00' + i)).load();
+      let audioElement = (<HTMLAudioElement>document.getElementById('sfxPlayer00' + i));
+      if (audioElement !== undefined && audioElement !== null) {
+        audioElement.pause();
+        audioElement.load();
+      }
     }
 
-    (<HTMLVideoElement>document.getElementById('trailerVideoplayer')).pause();
-    (<HTMLVideoElement>document.getElementById('trailerVideoplayer')).load();
-    (<HTMLVideoElement>document.getElementById('trailerVideoplayer')).hidden = true;
+    let videoElement = (<HTMLVideoElement>document.getElementById('trailerVideoplayer'));
+    if (videoElement !== undefined && videoElement !== null) {
+      videoElement.pause();
+      videoElement.load();
+      videoElement.hidden = true;
+    }
   }
 
   private manageLayers(audioElement: HTMLAudioElement, sfxPath: string): boolean {
+    console.log("audioElement :" + audioElement)
+    console.log("sfxPath: " + sfxPath)
     if (!this.isPlaying(audioElement)) {
-      audioElement.src = './' + sfxPath;
+      audioElement.src = '' + sfxPath;
       audioElement.load();
       audioElement.play();
       return true;
@@ -192,11 +203,16 @@ export class GlobalScreenComponent implements OnInit {
 
   changeColor(on: boolean, sat: number, bri: number, hue: number) {
     if (on === true) {
-      this.http.put(this.hueBridgeUrl, { "on": on, "sat": sat, "bri": bri, "hue": hue }).subscribe();
+      this.http.put(this.hueBridgeUrl, { "on": on, "sat": sat, "bri": bri, "hue": hue }, this.optionRequete).subscribe();
     }
     else if (on === false) {
-      this.http.put(this.hueBridgeUrl, { "on": on, "sat": sat, "bri": bri, "hue": hue }).subscribe();
+      this.http.put(this.hueBridgeUrl, { "on": on, "sat": sat, "bri": bri, "hue": hue }, this.optionRequete).subscribe();
     }
+  }
+
+  private optionRequete = {
+    headers: new HttpHeaders({
+    })
   }
 
   stopVfx() {

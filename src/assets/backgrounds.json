@@ -4,7 +4,7 @@
         {
             "Name": "000-DEFAULT",
             "UiName": "DEFAULT",
-            "Url": "000-DEFAULT.jpg"
+            "Url": "000-DEFAULT.png"
         },
         {
             "Name": "001-BLACK",
@@ -14,7 +14,7 @@
         {
             "Name": "002-BATTLEFIELD",
             "UiName": "BATTLEFIELD",
-            "Url": "002-BATTLEFIELD.jpg"
+            "Url": "002-BATTLEFIELD.png"
         },
         {
             "Name": "SPH-COR",

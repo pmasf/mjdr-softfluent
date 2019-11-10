@@ -37,7 +37,7 @@ export class GmScreenComponent implements OnInit {
     this.http.get('./assets/backgrounds.json').subscribe(response => {
       this.Backgrounds = response as AssetFile;
       this.BaseBackgroundsUrl = this.Backgrounds.BaseUrl;
-      this.SelectedBackground = this.Backgrounds.Assets[0].Name + '.jpg';
+      this.SelectedBackground = this.Backgrounds.Assets[0].Name + '.png';
     });
     this.http.get('./assets/cards.json').subscribe(response => {
       this.Cards = response as AssetFile;
@@ -118,7 +118,7 @@ export class GmScreenComponent implements OnInit {
       this.SelectedPlayer.SfxBackgroundImage = "";
     }
     else {
-      this.SelectedBackground = this.Backgrounds.Assets[0].Name + ".jpg";
+      this.SelectedBackground = this.Backgrounds.Assets[0].Name + ".png";
       this.changeBackground();
     }
 
