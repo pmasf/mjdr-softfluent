@@ -1,10 +1,8 @@
-import { Asset } from "./asset";
+import { Asset } from './asset';
 
 export class AssetFile {
-    BaseUrl: string;
-    Assets: Asset[] = [];
+  BaseUrl: string;
+  Assets: Asset[] = [];
 
-    constructor() {
-
-    }
+  constructor() {}
 }

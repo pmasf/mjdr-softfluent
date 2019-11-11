@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AssetFile } from '../models/assetFile';
 import { Player } from '../models/player';
-import { QueueMessage } from '../models/message';
+import { QueueMessage } from '../models/queueMessage';
 import { Subscription } from 'rxjs';
 import { RxStompService } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
@@ -14,8 +14,8 @@ import { ActionEnum } from '../models/actionEnum';
   styleUrls: ['./global-screen.component.css']
 })
 export class GlobalScreenComponent implements OnInit {
-
-  private hueBridgeUrl: string = 'http://192.168.1.119/api/OTBB0J8zWAiqUiDNrXcq7Ym6XYVEw1w5cuJldEIv/groups/1/action';
+  private hueBridgeUrl: string =
+    'http://192.168.1.119/api/OTBB0J8zWAiqUiDNrXcq7Ym6XYVEw1w5cuJldEIv/groups/1/action';
 
   Players: Player[] = [];
 
@@ -34,7 +34,10 @@ export class GlobalScreenComponent implements OnInit {
   private topicSubscription: Subscription;
   private audioLayerNumber: number = 3;
 
-  constructor(private rxStompService: RxStompService, private http: HttpClient) {
+  constructor(
+    private rxStompService: RxStompService,
+    private http: HttpClient
+  ) {
     this.http.get('./assets/backgrounds.json').subscribe(response => {
       this.Backgrounds = response as AssetFile;
       this.BaseBackgroundsUrl = this.Backgrounds.BaseUrl;
@@ -52,13 +55,17 @@ export class GlobalScreenComponent implements OnInit {
     this.http.get('./assets/trailers.json').subscribe(response => {
       this.Trailers = response as AssetFile;
     });
-    this.topicSubscription = this.rxStompService.watch('/topic/mjdr-party-manager-queue').subscribe((message: Message) => {
-      this.manageReceivedMessage(message);
-    });
+    this.topicSubscription = this.rxStompService
+      .watch('/topic/mjdr-party-manager-queue')
+      .subscribe((message: Message) => {
+        this.manageReceivedMessage(message);
+      });
   }
 
   ngOnInit() {
-    var trailerVideoplayer = <HTMLVideoElement>document.getElementById('trailerVideoplayer');
+    var trailerVideoplayer = <HTMLVideoElement>(
+      document.getElementById('trailerVideoplayer')
+    );
     trailerVideoplayer.hidden = true;
   }
 
@@ -84,11 +91,18 @@ export class GlobalScreenComponent implements OnInit {
         break;
       case ActionEnum.REMOVE_PLAYER:
         player = receivedMessage.RawData;
-        this.Players.splice(this.Players.indexOf(this.Players.find(p => p.Guid === receivedMessage.Target.Guid)), 1);
+        this.Players.splice(
+          this.Players.indexOf(
+            this.Players.find(p => p.Guid === receivedMessage.Target.Guid)
+          ),
+          1
+        );
         break;
       case ActionEnum.VFX_ON:
         if (receivedMessage.Target !== undefined) {
-          let currentPlayerVfx = this.Players.find(p => p.Guid === receivedMessage.Target.Guid);
+          let currentPlayerVfx = this.Players.find(
+            p => p.Guid === receivedMessage.Target.Guid
+          );
 
           if (currentPlayerVfx !== undefined) {
             currentPlayerVfx.SfxBackgroundImage = receivedMessage.RawData;
@@ -100,9 +114,11 @@ export class GlobalScreenComponent implements OnInit {
         break;
       case ActionEnum.FX_OFF:
         if (receivedMessage.Target !== undefined) {
-          let currentPlayerSFx = this.Players.find(p => p.Guid === receivedMessage.Target.Guid);
+          let currentPlayerSFx = this.Players.find(
+            p => p.Guid === receivedMessage.Target.Guid
+          );
           if (currentPlayerSFx !== undefined) {
-            currentPlayerSFx.SfxBackgroundImage = "";
+            currentPlayerSFx.SfxBackgroundImage = '';
           }
         }
         this.stopSfx();
@@ -136,10 +152,18 @@ export class GlobalScreenComponent implements OnInit {
   }
 
   playSfx(sfxPath: string) {
-    console.log("playsfx:" + sfxPath)
+    console.log('playsfx:' + sfxPath);
     if (sfxPath !== '') {
       var layerNumber = 1;
-      while (!this.manageLayers(<HTMLAudioElement>document.getElementById('sfxPlayer00' + layerNumber), sfxPath + ".mp3") || layerNumber > this.audioLayerNumber) {
+      while (
+        !this.manageLayers(
+          <HTMLAudioElement>(
+            document.getElementById('sfxPlayer00' + layerNumber)
+          ),
+          sfxPath + '.mp3'
+        ) ||
+        layerNumber > this.audioLayerNumber
+      ) {
         layerNumber++;
       }
     }
@@ -147,14 +171,18 @@ export class GlobalScreenComponent implements OnInit {
 
   stopSfx() {
     for (var i = 1; i <= this.audioLayerNumber; i++) {
-      let audioElement = (<HTMLAudioElement>document.getElementById('sfxPlayer00' + i));
+      let audioElement = <HTMLAudioElement>(
+        document.getElementById('sfxPlayer00' + i)
+      );
       if (audioElement !== undefined && audioElement !== null) {
         audioElement.pause();
         audioElement.load();
       }
     }
 
-    let videoElement = (<HTMLVideoElement>document.getElementById('trailerVideoplayer'));
+    let videoElement = <HTMLVideoElement>(
+      document.getElementById('trailerVideoplayer')
+    );
     if (videoElement !== undefined && videoElement !== null) {
       videoElement.pause();
       videoElement.load();
@@ -162,9 +190,12 @@ export class GlobalScreenComponent implements OnInit {
     }
   }
 
-  private manageLayers(audioElement: HTMLAudioElement, sfxPath: string): boolean {
-    console.log("audioElement :" + audioElement)
-    console.log("sfxPath: " + sfxPath)
+  private manageLayers(
+    audioElement: HTMLAudioElement,
+    sfxPath: string
+  ): boolean {
+    console.log('audioElement :' + audioElement);
+    console.log('sfxPath: ' + sfxPath);
     if (!this.isPlaying(audioElement)) {
       audioElement.src = '' + sfxPath;
       audioElement.load();
@@ -179,7 +210,9 @@ export class GlobalScreenComponent implements OnInit {
   }
 
   playVideoTrailer(trailerName: string) {
-    var trailerVideoplayer = <HTMLVideoElement>document.getElementById('trailerVideoplayer');
+    var trailerVideoplayer = <HTMLVideoElement>(
+      document.getElementById('trailerVideoplayer')
+    );
     trailerVideoplayer.src = './assets/sfx/TRL-003-001.mp4';
     trailerVideoplayer.load();
     trailerVideoplayer.play();
@@ -189,31 +222,38 @@ export class GlobalScreenComponent implements OnInit {
   manageColor(sfxPath: string) {
     var rq = '';
 
-    if (sfxPath == "default") {
+    if (sfxPath == 'default') {
       this.changeColor(true, 77, 254, 41435);
-    }
-    else if (sfxPath == "TRL-003-001") {
+    } else if (sfxPath == 'TRL-003-001') {
       this.changeColor(false, 64, 254, 42290);
-    }
-    else {
-      if (sfxPath == "SPH-COR")
-        this.changeColor(true, 254, 254, 49201);
+    } else {
+      if (sfxPath == 'SPH-COR') this.changeColor(true, 254, 254, 49201);
     }
   }
 
   changeColor(on: boolean, sat: number, bri: number, hue: number) {
     if (on === true) {
-      this.http.put(this.hueBridgeUrl, { "on": on, "sat": sat, "bri": bri, "hue": hue }, this.optionRequete).subscribe();
-    }
-    else if (on === false) {
-      this.http.put(this.hueBridgeUrl, { "on": on, "sat": sat, "bri": bri, "hue": hue }, this.optionRequete).subscribe();
+      this.http
+        .put(
+          this.hueBridgeUrl,
+          { on: on, sat: sat, bri: bri, hue: hue },
+          this.optionRequete
+        )
+        .subscribe();
+    } else if (on === false) {
+      this.http
+        .put(
+          this.hueBridgeUrl,
+          { on: on, sat: sat, bri: bri, hue: hue },
+          this.optionRequete
+        )
+        .subscribe();
     }
   }
 
   private optionRequete = {
-    headers: new HttpHeaders({
-    })
-  }
+    headers: new HttpHeaders({})
+  };
 
   stopVfx() {
     this.changeColor(true, 77, 254, 41435);
@@ -222,5 +262,4 @@ export class GlobalScreenComponent implements OnInit {
   ngOnDestroy() {
     this.topicSubscription.unsubscribe();
   }
-
 }

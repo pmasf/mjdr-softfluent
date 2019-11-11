@@ -3,7 +3,7 @@ import { Player } from '../models/player';
 import { AssetFile } from '../models/assetFile';
 import { RxStompService } from '@stomp/ng2-stompjs';
 import { HttpClient } from '@angular/common/http';
-import { QueueMessage } from '../models/message';
+import { QueueMessage } from '../models/queueMessage';
 import { ActionEnum } from '../models/actionEnum';
 import { Asset } from '../models/asset';
 
@@ -12,9 +12,7 @@ import { Asset } from '../models/asset';
   templateUrl: './gm-screen.component.html',
   styleUrls: ['./gm-screen.component.css']
 })
-
 export class GmScreenComponent implements OnInit {
-
   Players: Player[] = [];
 
   Backgrounds: AssetFile = new AssetFile();
@@ -29,9 +27,15 @@ export class GmScreenComponent implements OnInit {
 
   Visibility: string = 'hidden';
 
-  constructor(private rxStompService: RxStompService, private http: HttpClient) {
-
-    let message = new QueueMessage(ActionEnum.CLEAR_PLAYERS, [], this.SelectedPlayer);
+  constructor(
+    private rxStompService: RxStompService,
+    private http: HttpClient
+  ) {
+    let message = new QueueMessage(
+      ActionEnum.CLEAR_PLAYERS,
+      [],
+      this.SelectedPlayer
+    );
     this.sendQueueMessage(message);
 
     this.http.get('./assets/backgrounds.json').subscribe(response => {
@@ -52,13 +56,17 @@ export class GmScreenComponent implements OnInit {
 
     //this.Players.push(new Player("Iri", "Irina", "white", "blue"));
     //this.Players.push(new Player("Sor", "Soraya", "black", "cyan"));
-    this.Players.push(new Player("Adr", "Adrian", "black", "yellow"));
-    this.Players.push(new Player("Dor", "Dorian", "white", "purple"));
-    this.Players.push(new Player("Lup", "Lupin", "white", "green"));
-    this.Players.push(new Player("All", "Allister", "white", "red"));
+    this.Players.push(new Player('Adr', 'Adrian', 'black', 'yellow'));
+    this.Players.push(new Player('Dor', 'Dorian', 'white', 'purple'));
+    this.Players.push(new Player('Lup', 'Lupin', 'white', 'green'));
+    this.Players.push(new Player('All', 'Allister', 'white', 'red'));
 
     for (var i = 0; i < this.Players.length; i++) {
-      let message = new QueueMessage(ActionEnum.ADD_PLAYER, this.Players[i], this.SelectedPlayer);
+      let message = new QueueMessage(
+        ActionEnum.ADD_PLAYER,
+        this.Players[i],
+        this.SelectedPlayer
+      );
       this.sendQueueMessage(message);
 
       this.SelectedPlayer = this.Players[0];
@@ -67,11 +75,9 @@ export class GmScreenComponent implements OnInit {
     this.changeBackground();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   mouseUpHandler(player: Player) {
-
     var element = document.getElementById(player.Guid);
     var style = window.getComputedStyle(element);
     var matrix = new WebKitCSSMatrix(style.webkitTransform);
@@ -82,75 +88,107 @@ export class GmScreenComponent implements OnInit {
 
     let message = new QueueMessage(ActionEnum.MOVE_PLAYER, player, player);
 
-    this.rxStompService.publish({ destination: '/topic/mjdr-party-manager-queue', body: JSON.stringify(message) });
+    this.rxStompService.publish({
+      destination: '/topic/mjdr-party-manager-queue',
+      body: JSON.stringify(message)
+    });
 
     this.SelectedPlayer = player;
   }
 
   playFx(fx: Asset) {
-
     let sfxPath = this.Sfxs.BaseUrl + fx.Name;
     let vfxPath = this.Vfxs.BaseUrl + fx.Name;
     let backgroundPath = this.Backgrounds.BaseUrl + fx.Name;
 
-    let message = new QueueMessage(ActionEnum.SFX_ON, sfxPath, this.SelectedPlayer);
+    let message = new QueueMessage(
+      ActionEnum.SFX_ON,
+      sfxPath,
+      this.SelectedPlayer
+    );
     this.sendQueueMessage(message);
 
     if (this.SelectedPlayer !== undefined) {
-      this.SelectedPlayer.SfxBackgroundImage = vfxPath + ".png";
+      this.SelectedPlayer.SfxBackgroundImage = vfxPath + '.png';
 
-      message = new QueueMessage(ActionEnum.VFX_ON, this.SelectedPlayer.SfxBackgroundImage, this.SelectedPlayer);
+      message = new QueueMessage(
+        ActionEnum.VFX_ON,
+        this.SelectedPlayer.SfxBackgroundImage,
+        this.SelectedPlayer
+      );
       this.sendQueueMessage(message);
-    }
-
-    else if (fx.Name.startsWith("SPH-")) {
-      this.SelectedBackground =  fx.Name + ".png";
+    } else if (fx.Name.startsWith('SPH-')) {
+      this.SelectedBackground = fx.Name + '.png';
       this.changeBackground();
     }
 
-    message = new QueueMessage(ActionEnum.MANAGE_COLOR, fx.Name, this.SelectedPlayer);
+    message = new QueueMessage(
+      ActionEnum.MANAGE_COLOR,
+      fx.Name,
+      this.SelectedPlayer
+    );
     this.sendQueueMessage(message);
   }
 
   stopFx() {
-
     if (this.SelectedPlayer !== undefined) {
-      this.SelectedPlayer.SfxBackgroundImage = "";
-    }
-    else {
-      this.SelectedBackground = this.Backgrounds.Assets[0].Name + ".png";
+      this.SelectedPlayer.SfxBackgroundImage = '';
+    } else {
+      this.SelectedBackground = this.Backgrounds.Assets[0].Name + '.png';
       this.changeBackground();
     }
 
-    let message = new QueueMessage(ActionEnum.FX_OFF, "", this.SelectedPlayer);
+    let message = new QueueMessage(ActionEnum.FX_OFF, '', this.SelectedPlayer);
     this.sendQueueMessage(message);
 
-    message = new QueueMessage(ActionEnum.SET_TO_DEFAULT_COLOR, "", this.SelectedPlayer);
+    message = new QueueMessage(
+      ActionEnum.SET_TO_DEFAULT_COLOR,
+      '',
+      this.SelectedPlayer
+    );
     this.sendQueueMessage(message);
   }
 
   changeBackground() {
     if (this.SelectedBackground !== '') {
-      let message = new QueueMessage(ActionEnum.SET_BACKGROUND, this.SelectedBackground, this.SelectedPlayer);
+      let message = new QueueMessage(
+        ActionEnum.SET_BACKGROUND,
+        this.SelectedBackground,
+        this.SelectedPlayer
+      );
 
       this.sendQueueMessage(message);
     }
   }
 
   addCard() {
-    let newCard = new Player("+", this.SelectedCard.substring(this.SelectedCard.length - 4, 4), "white", "blue", 'assets/cards/' + this.SelectedCard);
+    let newCard = new Player(
+      '+',
+      this.SelectedCard.substring(this.SelectedCard.length - 4, 4),
+      'white',
+      'blue',
+      'assets/cards/' + this.SelectedCard
+    );
     this.Players.push(newCard);
 
     this.SelectedPlayer = newCard;
 
-    let message = new QueueMessage(ActionEnum.ADD_PLAYER, newCard, this.SelectedPlayer);
+    let message = new QueueMessage(
+      ActionEnum.ADD_PLAYER,
+      newCard,
+      this.SelectedPlayer
+    );
     this.sendQueueMessage(message);
   }
 
   removeCard() {
     this.Players.splice(this.Players.indexOf(this.SelectedPlayer), 1);
 
-    let message = new QueueMessage(ActionEnum.REMOVE_PLAYER, this.SelectedPlayer, this.SelectedPlayer);
+    let message = new QueueMessage(
+      ActionEnum.REMOVE_PLAYER,
+      this.SelectedPlayer,
+      this.SelectedPlayer
+    );
     this.sendQueueMessage(message);
     this.SelectedPlayer = undefined;
   }
@@ -160,12 +198,14 @@ export class GmScreenComponent implements OnInit {
   }
 
   toggleVisibility() {
-    if (this.Visibility === "hidden")
-      this.Visibility = "visible";
-    else
-      this.Visibility = "hidden";
+    if (this.Visibility === 'hidden') this.Visibility = 'visible';
+    else this.Visibility = 'hidden';
 
-    let message = new QueueMessage(ActionEnum.SET_VISIBILITY, this.Visibility, this.SelectedPlayer);
+    let message = new QueueMessage(
+      ActionEnum.SET_VISIBILITY,
+      this.Visibility,
+      this.SelectedPlayer
+    );
     this.sendQueueMessage(message);
   }
 
@@ -174,7 +214,9 @@ export class GmScreenComponent implements OnInit {
   }
 
   sendQueueMessage(message: QueueMessage) {
-
-    this.rxStompService.publish({ destination: '/topic/mjdr-party-manager-queue', body: JSON.stringify(message) });
+    this.rxStompService.publish({
+      destination: '/topic/mjdr-party-manager-queue',
+      body: JSON.stringify(message)
+    });
   }
 }
